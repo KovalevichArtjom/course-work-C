@@ -43,12 +43,37 @@ void save(char path[], char content[MAX][LEN])
 
 }
 
+void open(char path[])
+{
+
+	FILE* fp = fopen(path, "r");
+
+	if (fp != NULL) {
+		// узнаем размер файла для создания буфера нужного размера
+		fseek(fp, 0L, SEEK_END);
+		long size = ftell(fp);
+		fseek(fp, 0L, SEEK_SET);
+
+		// выделяем память под буфер
+		char* fcontent = (char*)malloc(sizeof(char) * size);
+		// читаем полностью весь файл в буфер   
+		fread(fcontent, 1, size, fp);
+		// выводим содержимое буфера в стандартный поток
+		printf(fcontent);
+		// и обязательно освобождаем память выделенную под буфер
+		free(fcontent);
+		// закрываем файл
+		fclose(fp);
+
+	}
+}
 
 void file()
 {
-	char pathToFile[]	=	"./document/students.txt";
+	char pathToFile[]	=	"../document/students.txt";
 	char content[MAX][LEN] = { "" };
 	
 	createContent(content);
 	save(pathToFile, content);
+	open(pathToFile);
 }

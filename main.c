@@ -4,10 +4,8 @@
 #include <conio.h>
 #include "library/file.h"
 
-
 void main()
 {
-
 	file();
 
 	return 0;
