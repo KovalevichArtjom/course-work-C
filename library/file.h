@@ -1,10 +1,9 @@
 #define MAX 8
 #define LEN 255
 
-void createContent(char content[MAX][LEN])
+void createContent(char content[MAX][LEN], char* fpointer, char* fend)
 {
 	char student[]			= { "student_" };
-	char pointer[]			= { ", " };
 	char numberChar[3];
 
 	for (int i = 0; i < MAX; i++) {
@@ -14,11 +13,33 @@ void createContent(char content[MAX][LEN])
 		strcat(content[i], numberChar);
 
 		if ((i + 1) != MAX) {
-			strcat(content[i], pointer);
+			strcat(content[i], fpointer);
+			continue;
 		}
-		
+
+		strcat(content[i], fend);
 	}
 	
+}
+
+void getArr(char *fcontent[MAX][LEN], char* fpointer, char* fend)
+{
+	char*	ptr				= strtok(fcontent, fpointer);
+	int		counter			= 0;
+	char	buf[MAX][LEN]	= { "" };
+
+	while (ptr != NULL)
+	{
+		strcat(buf[counter], ptr);
+		ptr = strtok(NULL, fpointer);
+		
+		if (ptr != NULL) {
+			counter++;
+			continue;
+		}
+
+		strtok(buf[counter], fend);
+	}
 }
 
 void outContent(char content[MAX][LEN])
@@ -30,7 +51,7 @@ void outContent(char content[MAX][LEN])
 
 }
 
-void save(char path[], char content[MAX][LEN])
+void save(char* path, char content[MAX][LEN])
 {
 	FILE *fp = fopen(path, "w");
 
@@ -43,37 +64,38 @@ void save(char path[], char content[MAX][LEN])
 
 }
 
-void open(char path[])
+void open(char* path, char fcontent[MAX][LEN])
 {
 
 	FILE* fp = fopen(path, "r");
 
 	if (fp != NULL) {
-		// узнаем размер файла для создания буфера нужного размера
+		// find out the file size to create a buffer of the required size
 		fseek(fp, 0L, SEEK_END);
 		long size = ftell(fp);
 		fseek(fp, 0L, SEEK_SET);
-
-		// выделяем память под буфер
-		char* fcontent = (char*)malloc(sizeof(char) * size);
-		// читаем полностью весь файл в буфер   
-		fread(fcontent, 1, size, fp);
-		// выводим содержимое буфера в стандартный поток
-		printf(fcontent);
-		// и обязательно освобождаем память выделенную под буфер
-		free(fcontent);
-		// закрываем файл
+		// allocate memory for the buffer
+		char* buf = (char*)malloc(sizeof(char) * size);
+		// read file
+		fread(buf, 1, size, fp);
+		strcat(fcontent, buf);
+		free(buf);
 		fclose(fp);
-
+		
 	}
 }
 
 void file()
 {
-	char pathToFile[]	=	"../document/students.txt";
-	char content[MAX][LEN] = { "" };
+	char*	pathToFile			=	"../document/students.txt";
+	char*	fpointer			= { ", " };
+	char*	fend				= { "." };
+	char	content[MAX][LEN]	= { "" };
+	char	fcontent[MAX][LEN]	= { "" };
 	
-	createContent(content);
+	createContent(content, fpointer, fend);
 	save(pathToFile, content);
-	open(pathToFile);
+	open(pathToFile, fcontent);
+	getArr(fcontent, fpointer, fend);
+	printf(fcontent[1]);
 }
