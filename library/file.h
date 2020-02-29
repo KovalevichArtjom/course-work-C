@@ -1,9 +1,10 @@
 #define MAX 8
 #define LEN 255
+char	fcontent[MAX][LEN]	= { "" };
 
 void createContent(char content[MAX][LEN], char* fpointer, char* fend)
 {
-	char student[]			= { "student_" };
+	char student[]	= { "student_" };
 	char numberChar[3];
 
 	for (int i = 0; i < MAX; i++) {
@@ -22,15 +23,14 @@ void createContent(char content[MAX][LEN], char* fpointer, char* fend)
 	
 }
 
-void getArr(char *fcontent[MAX][LEN], char* fpointer, char* fend)
+void getArr(char fbuffer[MAX][LEN], char* fpointer, char* fend)
 {
-	char*	ptr				= strtok(fcontent, fpointer);
+	char*	ptr				= strtok(fbuffer, fpointer);
 	int		counter			= 0;
-	char	buf[MAX][LEN]	= { "" };
 
 	while (ptr != NULL)
 	{
-		strcat(buf[counter], ptr);
+		strcat(fcontent[counter], ptr);
 		ptr = strtok(NULL, fpointer);
 		
 		if (ptr != NULL) {
@@ -38,7 +38,7 @@ void getArr(char *fcontent[MAX][LEN], char* fpointer, char* fend)
 			continue;
 		}
 
-		strtok(buf[counter], fend);
+		strtok(fcontent[counter], fend);
 	}
 }
 
@@ -64,7 +64,7 @@ void save(char* path, char content[MAX][LEN])
 
 }
 
-void open(char* path, char fcontent[MAX][LEN])
+void open(char* path, char fbuffer[MAX][LEN])
 {
 
 	FILE* fp = fopen(path, "r");
@@ -78,7 +78,7 @@ void open(char* path, char fcontent[MAX][LEN])
 		char* buf = (char*)malloc(sizeof(char) * size);
 		// read file
 		fread(buf, 1, size, fp);
-		strcat(fcontent, buf);
+		strcat(fbuffer, buf);
 		free(buf);
 		fclose(fp);
 		
@@ -87,15 +87,14 @@ void open(char* path, char fcontent[MAX][LEN])
 
 void file()
 {
-	char*	pathToFile			=	"../document/students.txt";
+	char*	pathToFile			= "../document/students.txt";
 	char*	fpointer			= { ", " };
 	char*	fend				= { "." };
 	char	content[MAX][LEN]	= { "" };
-	char	fcontent[MAX][LEN]	= { "" };
+	char	fbuffer[MAX][LEN] = { "" };
 	
 	createContent(content, fpointer, fend);
 	save(pathToFile, content);
-	open(pathToFile, fcontent);
-	getArr(fcontent, fpointer, fend);
-	printf(fcontent[1]);
+	open(pathToFile, fbuffer);
+	getArr(fbuffer, fpointer, fend);
 }

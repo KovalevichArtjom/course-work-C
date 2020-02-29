@@ -3,10 +3,12 @@
 #include <stdlib.h>
 #include <conio.h>
 #include "library/file.h"
+#include "library/date.h"
 
 void main()
 {
 	file();
+	char* weekday = date();
 
 	return 0;
 }
