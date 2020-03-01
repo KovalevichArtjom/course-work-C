@@ -1,4 +1,4 @@
-#define MAX 8
+#define MAX 2
 #define LEN 255
 char	fcontent[MAX][LEN]	= { "" };
 
@@ -44,9 +44,11 @@ void getArr(char fbuffer[MAX][LEN], char* fpointer, char* fend)
 
 void outContent(char content[MAX][LEN])
 {
-	
+	system("cls");
+	printf("Outputting all student with their is personal data:\n");
+
 	for (int i = 0; i < MAX; i++) {
-		printf(content[i]);
+		printf("%s\n",content[i]);
 	}
 
 }

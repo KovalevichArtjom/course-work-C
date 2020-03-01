@@ -2,13 +2,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
+#include <errno.h>
 #include "library/file.h"
 #include "library/date.h"
+
 
 void main()
 {
 	file();
-	char* weekday = date();
+	date(fcontent);
+	outContent(fcontent);
 
 	return 0;
 }
