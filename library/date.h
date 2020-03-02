@@ -74,12 +74,12 @@ void setBirthdayStudent(char fcontent[MAX][LEN])
 		strcat(fcontent[i], yChar);
 		strcat(fcontent[i], " ");
 
-		weekday = getNameWeekday(&d[i].day, &d[i].month, &d[i].year);
+		weekday = getNameWeekday(d[i].day, d[i].month, d[i].year);
 		strcat(fcontent[i], weekday);
 	}
 }
 
-char* date(char	fcontent[MAX][LEN])
+void date(char	fcontent[MAX][LEN])
 {
 	setBirthdayStudent(fcontent);
 }
