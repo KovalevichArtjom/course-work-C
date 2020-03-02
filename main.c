@@ -13,5 +13,6 @@ void main()
 	date(fcontent);
 	outContent(fcontent);
 
-	return 0;
+	printf("\nPress any key to close this window ...");
+	getchar();
 }
