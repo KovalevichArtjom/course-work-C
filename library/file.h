@@ -89,7 +89,7 @@ void open(char* path, char fbuffer[MAX][LEN])
 
 void file()
 {
-	char*	pathToFile			= "../document/students.txt";
+	char*	pathToFile			= "document/students.txt";
 	char*	fpointer			= { ", " };
 	char*	fend				= { "." };
 	char	content[MAX][LEN]	= { "" };

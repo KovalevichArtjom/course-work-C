@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <conio.h>
 #include <errno.h>
+#include <string.h>
 #include "library/file.h"
 #include "library/date.h"
 
